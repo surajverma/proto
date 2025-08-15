@@ -1,59 +1,54 @@
-# IP Version Indicator (Firefox Add-on)
+# Proto – See if a site uses IPv4 or IPv6 (Firefox Extension)
 
-Shows whether the active page is using IPv4 or IPv6. The page action icon (address bar / toolbar area) is dynamically drawn and colored:
+Ever wondered if a website is using IPv4 or IPv6? Proto makes it easy: just look at the toolbar icon. This extension shows which IP version is being used to reach the current site and displays the actual IP address in a simple popup.
 
-* Green (#00c853) – IPv6
-* Orange (#ff9800) – IPv4
-* Gray (#9e9e9e) – Resolving / unknown
+## What does it do?
 
-The tooltip includes: version, resolved remote IP, protocol, and a private flag if the address is local / ULA.
+- Instantly shows whether the site you are visiting is using IPv4 (orange) or IPv6 (green).
+- Displays the resolved IP address in the toolbar and in the popup.
+- Tooltip includes protocol and whether the address is private/local.
 
-## Folder Structure
+## How it works
+
+Proto listens for navigation and network events in the browser, determines the resolved address for the active tab when available, and updates the toolbar icon and tooltip. It prefers in-browser network events but falls back to a DNS lookup when the browser does not provide the address.
+
+## Using the popup
+
+Click the toolbar icon to see:
+
+- IP version (IPv4 or IPv6)
+- Resolved IP address
+- Protocol (HTTP/HTTPS)
+- Indicator if the address is private/local
+
+No settings—just a compact, read-only view so you can quickly check connectivity details.
+
+## Install (development)
+
+1. Open `about:debugging` in Firefox.
+2. Click "This Firefox" → "Load Temporary Add-on".
+3. Select the `manifest.json` file from this folder.
+
+## Project structure
+
 ```
-firefox-addon/
-	manifest.json
-	icons/
-	src/
-		background.js      # Core logic (IP detection + icon + tooltip)
-		popup/             # Lightweight popup UI
-			popup.html
-			popup.css
-			popup.js
+manifest.json
+icons/
+src/
+  background.js      # Main logic (IP detection, icon, tooltip)
+  popup/
+    popup.html
+    popup.css
+    popup.js
 ```
 
-## How It Works
-1. `webNavigation.onBeforeNavigate` resets state when a new top-level navigation starts.
-2. `webRequest.onCompleted` (main_frame) provides the resolved `details.ip` we classify as IPv4 / IPv6.
-3. A minimal per‑tab state map avoids regressions when other events fire.
-4. The icon is drawn on a canvas (OffscreenCanvas when available) for crisp rendering.
+## Why use Proto?
 
-## Popup
-Compact, read-only view:
-* Shows IPv4 / IPv6 label (full text)
-* Resolved IP (monospace)
-* Protocol and private indicator
-
-No copy buttons or settings—kept intentionally lean per design goal.
-
-## Install (Temporary)
-1. Open `about:debugging` → This Firefox → Load Temporary Add-on.
-2. Select `manifest.json` inside the `firefox-addon` directory.
-
-## Performance / Footprint
-* No external libraries
-* No persistent timers
-* Work only occurs on navigation and main-frame completion events
-* Dynamic icon generation happens at most a few times per page load
-
-## Notes
-* Manifest Version: 2 (Firefox continues to support MV2).
-* Icon text intentionally kept small; 16px canvas is a hard limit for legibility.
-
-## Possible Future Enhancements
-* Reverse DNS lookup (optional, would require a lightweight external API or DNS-over-HTTPS).
-* ASN display.
-* Per-tab or session history of IP family changes.
-* User option to collapse label to 4 / 6 for higher contrast.
+- No external services or tracking
+- Low overhead: only runs on navigation/network events
+- Small, focused UI
+- Open source and easy to extend
 
 ---
-Feel free to adapt or extend—license / reuse as you wish.
+
+Proto is open source and free to use. Contributions and suggestions are welcome.
