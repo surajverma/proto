@@ -1,4 +1,4 @@
-# Proto – See if a site uses IPv4 or IPv6 (Firefox Extension)
+# Proto – See if a site uses IPv4 or IPv6 on Firefox
 
 Ever wondered if a website is using IPv4 or IPv6? Proto makes it easy: just look at the toolbar icon. This extension shows which IP version is being used to reach the current site and displays the actual IP address in a simple popup.
 
