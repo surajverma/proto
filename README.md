@@ -8,6 +8,11 @@ Ever wondered if a website is using IPv4 or IPv6? Proto makes it easy: just look
 - Displays the resolved IP address in the toolbar and in the popup.
 - Tooltip includes protocol and whether the address is private/local.
 
+<img width="410" height="229" alt="image" src="https://github.com/user-attachments/assets/d9d83011-6783-47d5-8168-aca24752c1d7" />
+<img width="410" height="229" alt="image" src="https://github.com/user-attachments/assets/a09ea24a-14a4-4a1b-9a06-118108088521" />
+
+
+
 ## How it works
 
 Proto listens for navigation and network events in the browser, determines the resolved address for the active tab when available, and updates the toolbar icon and tooltip. It prefers in-browser network events but falls back to a DNS lookup when the browser does not provide the address.
